@@ -1,19 +1,22 @@
-apiVersion: "networking.istio.io/v1alpha3"
+apiVersion: "networking.istio.io/v1beta1"
 kind: "DestinationRule"
 metadata:
-  name: "paymentservice-mtls"
+  name: "paymentservice-disable-mtls"
 spec:
-  host: paymentservice.default.svc.cluster.local
+  host: paymentservice
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
+
 ---
-apiVersion: "authentication.istio.io/v1alpha1"
-kind: "Policy"
+
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
 metadata:
-  name: "paymentservice-mtls"
+  name: paymentservice-disabled
 spec:
-  targets:
-  - name: paymentservice
-  peers:
-  - mtls: {}
+  selector:
+    matchLabels:
+      app: paymentservice
+  mtls:
+    mode: STRICT 
