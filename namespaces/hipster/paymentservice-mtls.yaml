@@ -6,7 +6,7 @@ spec:
   host: paymentservice
   trafficPolicy:
     tls:
-      mode: ISTIO_MUTUAL
+      mode: DISABLE
 
 ---
 
@@ -19,4 +19,4 @@ spec:
     matchLabels:
       app: paymentservice
   mtls:
-    mode: STRICT
+    mode: DISABLE
